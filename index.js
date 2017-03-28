@@ -3,12 +3,16 @@ const parser = require('postcss-selector-parser');
 
 function transform(attr) {
   return (selectors) => {
-    selectors.each((selector) => {
-      selector.each((node) => {
-        if (node.type === 'tag') {
-          node.parent.insertAfter(node, parser.attribute({attribute: attr}));
-        }
-      });
+    const nodes = [];
+    selectors.walk((selector) => {
+      if (selector.type !== 'pseudo'
+        && selector.type !== 'selector'
+        && (!selector.prev() || selector.prev().type === 'combinator')) {
+        nodes.push(selector);
+      }
+    });
+    nodes.forEach((node) => {
+      node.parent.insertAfter(node, parser.attribute({attribute: attr}));
     });
   };
 }
@@ -16,8 +20,8 @@ function transform(attr) {
 module.exports = postcss.plugin('postcss-bind-attr', (attr) => {
   const processor = parser(transform(attr));
   return (css) => {
-    css.each((node) => {
-      node.selector = processor.process(node.selector).result;
+    css.each((rule) => {
+      rule.selector = processor.process(rule.selector).result;
     });
   };
 });

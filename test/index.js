@@ -6,7 +6,7 @@ const test = require('tape');
 const path = require('path');
 const fs = require('fs');
 
-test('tag', (t) => {
+test('tag without postcss', (t) => {
   const attr = 'bound-attr';
   const expected = `a[${attr}]`;
   const css = 'a';
@@ -15,10 +15,46 @@ test('tag', (t) => {
   t.end();
 });
 
-test('with postcss', (t) => {
+test('tag', (t) => {
   const attr = 'bound-attr';
   const expected = `a[${attr}] {}`;
   const css = 'a {}';
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
+test('multiple tags without postcss', (t) => {
+  const attr = 'bound-attr';
+  const expected = `h1[${attr}] h2[${attr}] h3[${attr}]`;
+  const css = 'h1 h2 h3';
+  const out = parser(transform(attr)).process(css).result;
+  t.equal(out, expected);
+  t.end();
+});
+
+test('multiple tags', (t) => {
+  const attr = 'bound-attr';
+  const expected = `h1[${attr}] h2[${attr}] h3[${attr}] {}`;
+  const css = 'h1 h2 h3 {}';
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
+test('group tags without postcss', (t) => {
+  const attr = 'bound-attr';
+  const expected = `h1[${attr}], h2[${attr}], h3[${attr}]`;
+  const css = 'h1, h2, h3';
+  const out = parser(transform(attr)).process(css).result;
+  t.equal(out, expected);
+  t.end();
+});
+
+test('group tags', (t) => {
+  const attr = 'bound-attr';
+  const expected = `h1[${attr}], h2[${attr}], h3[${attr}] {}`;
+  const css = 'h1, h2, h3 {}';
   const out = postcss().use(bindAttr(attr)).process(css).toString();
   t.equal(out, expected);
   t.end();
