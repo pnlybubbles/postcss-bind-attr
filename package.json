@@ -4,16 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "tape test/index.js",
+    "test": "standard && tape test/index.js",
     "test:debug": "node --inspect --debug-brk test/index.js",
-    "lint": "eslint *.js test/**/*.js"
+    "fmt": "standard --fix"
   },
   "dependencies": {
     "postcss": "^5.2.16",
     "postcss-selector-parser": "^2.2.3"
   },
   "devDependencies": {
-    "eslint": "^3.18.0",
+    "standard": "^9.0.2",
     "tape": "^4.6.3"
   }
 }
