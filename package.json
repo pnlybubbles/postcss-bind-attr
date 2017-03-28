@@ -1,0 +1,17 @@
+{
+  "name": "postcss-bind-attr",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "tape test/index.js",
+    "test:debug": "node --inspect --debug-brk test/index.js"
+  },
+  "dependencies": {
+    "postcss": "^5.2.16",
+    "postcss-selector-parser": "^2.2.3"
+  },
+  "devDependencies": {
+    "tape": "^4.6.3"
+  }
+}
