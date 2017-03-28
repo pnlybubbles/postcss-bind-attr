@@ -5,13 +5,15 @@
   "license": "MIT",
   "scripts": {
     "test": "tape test/index.js",
-    "test:debug": "node --inspect --debug-brk test/index.js"
+    "test:debug": "node --inspect --debug-brk test/index.js",
+    "lint": "eslint *.js test/**/*.js"
   },
   "dependencies": {
     "postcss": "^5.2.16",
     "postcss-selector-parser": "^2.2.3"
   },
   "devDependencies": {
+    "eslint": "^3.18.0",
     "tape": "^4.6.3"
   }
 }
