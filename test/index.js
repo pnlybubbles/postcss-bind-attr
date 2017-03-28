@@ -126,6 +126,19 @@ test('nested selectors', (t) => {
   t.end();
 });
 
+test('media query', (t) => {
+  const attr = 'bound-attr';
+  const expected = `@media screen and (max-width: 100px) {
+    a[${attr}] {}
+  }`;
+  const css = `@media screen and (max-width: 100px) {
+    a {}
+  }`;
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
 // test('postcss-bind-attr', (t) => {
 //   const expected = fs.readFileSync(path.resolve(__dirname, 'fixture-out.css'), 'utf8');
 //   const css = fs.readFileSync(path.resolve(__dirname, 'fixture.css'), 'utf8');

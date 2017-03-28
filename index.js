@@ -21,7 +21,7 @@ function transform(attr) {
 module.exports = postcss.plugin('postcss-bind-attr', (attr) => {
   const processor = parser(transform(attr));
   return (css) => {
-    css.walk((rule) => {
+    css.walkRules((rule) => {
       rule.selector = processor.process(rule.selector).result;
     });
   };
