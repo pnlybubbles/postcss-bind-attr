@@ -7,6 +7,7 @@ function transform(attr) {
     selectors.walk((selector) => {
       if (selector.type !== 'pseudo'
         && selector.type !== 'selector'
+        && selector.type !== 'nesting'
         && (!selector.prev() || selector.prev().type === 'combinator')) {
         nodes.push(selector);
       }
@@ -20,7 +21,7 @@ function transform(attr) {
 module.exports = postcss.plugin('postcss-bind-attr', (attr) => {
   const processor = parser(transform(attr));
   return (css) => {
-    css.each((rule) => {
+    css.walk((rule) => {
       rule.selector = processor.process(rule.selector).result;
     });
   };

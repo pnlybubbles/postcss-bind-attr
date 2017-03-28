@@ -96,6 +96,36 @@ test('multiple conditions', (t) => {
   t.end();
 });
 
+test('multiple lines', (t) => {
+  const attr = 'bound-attr';
+  const expected = `h1[${attr}] {
+  }
+  h2[${attr}] {
+  }`;
+  const css = `h1 {
+  }
+  h2 {
+  }`;
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
+test('nested selectors', (t) => {
+  const attr = 'bound-attr';
+  const expected = `h1[${attr}] {
+    & h2[${attr}] {
+    }
+  }`;
+  const css = `h1 {
+    & h2 {
+    }
+  }`;
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
 // test('postcss-bind-attr', (t) => {
 //   const expected = fs.readFileSync(path.resolve(__dirname, 'fixture-out.css'), 'utf8');
 //   const css = fs.readFileSync(path.resolve(__dirname, 'fixture.css'), 'utf8');
