@@ -3,7 +3,11 @@
 }
 
 :root a {
-  --color: red;
+  color: red;
+
+  & .nested {
+    color: green;
+  }
 }
 
 .base {
@@ -33,6 +37,12 @@ a[with-attr='hello'] {
 @custom-media --viewport-medium (width <= 50rem);
 
 @media (custom-media) {
+  :root {
+    & a {
+      color: green;
+    }
+  }
+
   .base {
     color: red;
 
