@@ -1,0 +1,43 @@
+:root {
+  --color: blue;
+}
+
+:root a {
+  --color: red;
+}
+
+.base[bound-attr] {
+  color: green;
+
+  & .nested[bound-attr] {
+    color: blue;
+  }
+
+  & a[bound-attr] {
+    color: red;
+  }
+}
+
+a.with-class[bound-attr] {
+  color: red;
+}
+
+a#with-id[bound-attr] {
+  color: blue;
+}
+
+a[with-attr='hello'][bound-attr] {
+  color: green;
+}
+
+@custom-media --viewport-medium (width <= 50rem);
+
+@media (custom-media) {
+  .base[bound-attr] {
+    color: red;
+
+    & a[bound-attr] {
+      color: blue;
+    }
+  }
+}

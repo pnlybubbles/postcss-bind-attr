@@ -1,0 +1,43 @@
+:root {
+  --color: blue;
+}
+
+:root a {
+  --color: red;
+}
+
+.base {
+  color: green;
+
+  & .nested {
+    color: blue;
+  }
+
+  & a {
+    color: red;
+  }
+}
+
+a.with-class {
+  color: red;
+}
+
+a#with-id {
+  color: blue;
+}
+
+a[with-attr='hello'] {
+  color: green;
+}
+
+@custom-media --viewport-medium (width <= 50rem);
+
+@media (custom-media) {
+  .base {
+    color: red;
+
+    & a {
+      color: blue;
+    }
+  }
+}
