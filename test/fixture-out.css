@@ -18,15 +18,15 @@
   }
 }
 
-a.with-class[bound-attr] {
+a[bound-attr].with-class {
   color: red;
 }
 
-a#with-id[bound-attr] {
+a[bound-attr]#with-id {
   color: blue;
 }
 
-a[with-attr='hello'][bound-attr] {
+a[bound-attr][with-attr='hello'] {
   color: green;
 }
 

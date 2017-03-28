@@ -60,6 +60,42 @@ test('group tags', (t) => {
   t.end();
 });
 
+test('ids classes attributes without postcss', (t) => {
+  const attr = 'bound-attr';
+  const expected = `#id[${attr}] .class[${attr}] [attr][${attr}]`;
+  const css = '#id .class [attr]';
+  const out = parser(transform(attr)).process(css).result;
+  t.equal(out, expected);
+  t.end();
+});
+
+test('ids classes attributes', (t) => {
+  const attr = 'bound-attr';
+  const expected = `#id[${attr}] .class[${attr}] [attr][${attr}] {}`;
+  const css = '#id .class [attr] {}';
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
+test('multiple conditions without postcss', (t) => {
+  const attr = 'bound-attr';
+  const expected = `#id[${attr}].class[attr]`;
+  const css = '#id.class[attr]';
+  const out = parser(transform(attr)).process(css).result;
+  t.equal(out, expected);
+  t.end();
+});
+
+test('multiple conditions', (t) => {
+  const attr = 'bound-attr';
+  const expected = `#id[${attr}].class[attr] {}`;
+  const css = '#id.class[attr] {}';
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
+
 // test('postcss-bind-attr', (t) => {
 //   const expected = fs.readFileSync(path.resolve(__dirname, 'fixture-out.css'), 'utf8');
 //   const css = fs.readFileSync(path.resolve(__dirname, 'fixture.css'), 'utf8');
