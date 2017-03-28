@@ -5,24 +5,21 @@ function transform(attr) {
   return (selectors) => {
     selectors.each((selector) => {
       selector.each((node) => {
-        if (node.type === 'combinator') {
-          node.parent.insertBefore(node, parser.attribute({attribute: attr}));
+        if (node.type === 'tag') {
+          node.parent.insertAfter(node, parser.attribute({attribute: attr}));
         }
       });
     });
   };
 }
 
-module.exports = postcss.plugin('postcss-bind-attr', (options = {}) => {
-  return (root) => {
+module.exports = postcss.plugin('postcss-bind-attr', (attr) => {
+  const processor = parser(transform(attr));
+  return (css) => {
+    css.each((node) => {
+      node.selector = processor.process(node.selector).result;
+    });
   };
 });
 
-function initializer(attr, options) {
-  const processor = parser(transform(attr));
-  return function(root) {
-    console.log(root);
-  };
-}
-module.exports.initializer = initializer;
 module.exports.transform = transform;

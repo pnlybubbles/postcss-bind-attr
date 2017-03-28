@@ -8,21 +8,21 @@ const fs = require('fs');
 
 test('tag', (t) => {
   const attr = 'bound-attr';
-  const expected = `a[${attr}] {}`;
-  const css = 'a {}';
+  const expected = `a[${attr}]`;
+  const css = 'a';
   const out = parser(transform(attr)).process(css).result;
-  t.equal(expected, out);
+  t.equal(out, expected);
   t.end();
 });
 
-// test('with postcss', (t) => {
-//   const attr = 'bound-attr';
-//   const expected = `a[${attr}] {}`;
-//   const css = 'a {}';
-//   const out = parser(transform(attr)).process(css).result;
-//   t.equal(expected, out);
-//   t.end();
-// });
+test('with postcss', (t) => {
+  const attr = 'bound-attr';
+  const expected = `a[${attr}] {}`;
+  const css = 'a {}';
+  const out = postcss().use(bindAttr(attr)).process(css).toString();
+  t.equal(out, expected);
+  t.end();
+});
 
 // test('postcss-bind-attr', (t) => {
 //   const expected = fs.readFileSync(path.resolve(__dirname, 'fixture-out.css'), 'utf8');
