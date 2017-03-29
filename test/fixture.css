@@ -19,6 +19,14 @@
 
   & a {
     color: red;
+
+    & * {
+      color: green;
+    }
+
+    & > h1 + h2 {
+      color: blue;
+    }
   }
 }
 

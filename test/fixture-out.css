@@ -19,6 +19,14 @@
 
   & a[bound-attr] {
     color: red;
+
+    & *[bound-attr] {
+      color: green;
+    }
+
+    & > h1[bound-attr] + h2[bound-attr] {
+      color: blue;
+    }
   }
 }
 

@@ -159,6 +159,42 @@ test('pseudo', (t) => {
   t.end()
 })
 
+test('universal without postcss', (t) => {
+  const attr = 'bound-attr'
+  const expected = `*[${attr}]`
+  const css = '*'
+  const out = parser(transform(attr)).process(css).result
+  t.equal(out, expected)
+  t.end()
+})
+
+test('universal', (t) => {
+  const attr = 'bound-attr'
+  const expected = `*[${attr}] {}`
+  const css = '* {}'
+  const out = postcss().use(bindAttr(attr)).process(css).toString()
+  t.equal(out, expected)
+  t.end()
+})
+
+test('conbinator without postcss', (t) => {
+  const attr = 'bound-attr'
+  const expected = `h1[${attr}] > h2[${attr}] + h3[${attr}]`
+  const css = 'h1 > h2 + h3'
+  const out = parser(transform(attr)).process(css).result
+  t.equal(out, expected)
+  t.end()
+})
+
+test('conbinator', (t) => {
+  const attr = 'bound-attr'
+  const expected = `h1[${attr}] > h2[${attr}] + h3[${attr}] {}`
+  const css = 'h1 > h2 + h3 {}'
+  const out = postcss().use(bindAttr(attr)).process(css).toString()
+  t.equal(out, expected)
+  t.end()
+})
+
 test('ignore root without postcss', (t) => {
   const attr = 'bound-attr'
   const expected = ':root'
