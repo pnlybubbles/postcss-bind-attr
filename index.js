@@ -31,23 +31,21 @@ function isRoot (selector) {
   return isRoot_
 }
 
-function ancestors (nested, target) {
-  return nested === target ||
+function ancestors (nested, checker) {
+  return checker(nested) ||
     (!!nested.parent &&
-      ancestors(nested.parent, target))
+      ancestors(nested.parent, checker))
 }
 
 module.exports = postcss.plugin('postcss-bind-attr', (attr) => {
   const processor = parser(transform(attr))
   return (css) => {
-    const roots = []
     css.walkRules((rule) => {
-      if (isRoot(rule.selector)) {
-        roots.push(rule)
-      } else {
-        if (!roots.some((elt) => ancestors(rule, elt))) {
-          rule.selector = processor.process(rule.selector).result
-        }
+      if ([
+        (n) => n.selector && isRoot(n.selector),
+        (n) => n.type === 'atrule' && n.name === 'keyframes'
+      ].map((chceker) => ancestors(rule, chceker)).every((b) => !b)) {
+        rule.selector = processor.process(rule.selector).result
       }
     })
   }

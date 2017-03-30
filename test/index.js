@@ -141,6 +141,23 @@ test('media query', (t) => {
   t.end()
 })
 
+test('@keyframes rules', (t) => {
+  const attr = 'bound-attr'
+  const expected = `@keyframes {
+    from {}
+    50% {}
+    to {}
+  }`
+  const css = `@keyframes {
+    from {}
+    50% {}
+    to {}
+  }`
+  const out = postcss().use(bindAttr(attr)).process(css).toString()
+  t.equal(out, expected)
+  t.end()
+})
+
 test('pseudo without postcss', (t) => {
   const attr = 'bound-attr'
   const expected = `h1[${attr}]:hover h2[${attr}]::after`
@@ -221,10 +238,9 @@ test('isRoot', (t) => {
 })
 
 test('ancestors', (t) => {
-  const part = {parent: {}}
-  t.equal(ancestors(part, part), true, 'same')
-  t.equal(ancestors({parent: part}, part), true, 'include part')
-  t.equal(ancestors({parent: {parent: {}}}, part), false, 'not include part')
+  t.equal(ancestors({ valid: true }, (n) => n.valid), true, 'current')
+  t.equal(ancestors({ parent: { parent: { valid: true } } }, (n) => n.valid), true, 'nested')
+  t.equal(ancestors({ parent: { valid: false } }, (n) => n.valid), false, 'invalid')
   t.end()
 })
 

@@ -1,6 +1,6 @@
 {
   "name": "postcss-bind-attr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bound an attribute of your choosing to every selectors which specify tags",
   "main": "index.js",
   "license": "MIT",

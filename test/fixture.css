@@ -1,3 +1,9 @@
+@charset 'UTF-8';
+@namespace svg url('http://www.w3.org/2000/svg');
+
+@import url('fineprint.css') print;
+@import url('bluish.css') projection, tv;
+
 :root {
   --color: blue;
 }
@@ -57,5 +63,47 @@ a[with-attr='hello'] {
     & a {
       color: blue;
     }
+  }
+}
+
+@keyframes identifier {
+  from { top: 0; left: 0; }
+  30% { top: 50px; }
+  68%, 72% { left: 50px; }
+  to { top: 100px; left: 100%; }
+}
+
+@supports (--foo: green) {
+  section {
+    color: green;
+  }
+}
+
+@page { margin: 15mm; }
+@page vertical { size: portrait; margin: 15mm; }
+@page horizontal { size: landscape; margin: 15mm; }
+
+@font-face {
+  font-family: MyHelvetica;
+  src: local('Helvetica Neue Bold'),
+       local('HelveticaNeue-Bold'),
+       url('MgOpenModernaBold.ttf');
+  font-weight: bold;
+}
+
+@viewport {
+  min-width: 640px;
+  max-width: 800px;
+}
+
+@counter-style circled-alpha {
+  system: fixed;
+  symbols: Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ;
+  suffix: " ";
+}
+
+@font-feature-values Font One {
+  @styleset {
+    nice-style: 12;
   }
 }
