@@ -43,7 +43,8 @@ module.exports = postcss.plugin('postcss-bind-attr', (attr) => {
     css.walkRules((rule) => {
       if ([
         (n) => n.selector && isRoot(n.selector),
-        (n) => n.type === 'atrule' && n.name === 'keyframes'
+        (n) => n.type === 'atrule' && n.name === 'keyframes',
+        (n) => n.type === 'atrule' && n.name === '-webkit-keyframes'
       ].map((chceker) => ancestors(rule, chceker)).every((b) => !b)) {
         rule.selector = processor.process(rule.selector).result
       }

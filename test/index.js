@@ -158,6 +158,23 @@ test('@keyframes rules', (t) => {
   t.end()
 })
 
+test('prefixed @keyframes rules', (t) => {
+  const attr = 'bound-attr'
+  const expected = `@-webkit-keyframes {
+    from {}
+    50% {}
+    to {}
+  }`
+  const css = `@-webkit-keyframes {
+    from {}
+    50% {}
+    to {}
+  }`
+  const out = postcss().use(bindAttr(attr)).process(css).toString()
+  t.equal(out, expected)
+  t.end()
+})
+
 test('pseudo without postcss', (t) => {
   const attr = 'bound-attr'
   const expected = `h1[${attr}]:hover h2[${attr}]::after`
